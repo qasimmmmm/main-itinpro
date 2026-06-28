@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
 import Reveal from "@/components/Reveal";
 import CTA from "@/components/CTA";
-import { company, trust } from "@/lib/content";
+import { company } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About ITIN-Pro — US Tax IDs & Company Formation for Non-Residents",
@@ -10,13 +10,6 @@ export const metadata: Metadata = {
     "ITIN-Pro helps founders and sellers around the world set up in the US — ITINs, LLCs and EINs — handled by IRS Certifying Acceptance Agents, 100% online.",
   alternates: { canonical: "/about" },
 };
-
-const stats = [
-  { value: trust.founders, label: "founders served" },
-  { value: trust.countries, label: "countries" },
-  { value: trust.since, label: "helping since" },
-  { value: trust.languages, label: "languages supported" },
-];
 
 const values = [
   {
@@ -48,18 +41,7 @@ export default function AboutPage() {
 
       <section className="bg-white py-20 lg:py-24">
         <div className="container-x">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 70}>
-                <div className="rounded-xl2 border border-mist bg-paper p-6 text-center">
-                  <div className="font-display text-4xl font-extrabold text-ink">{s.value}</div>
-                  <div className="mt-1 text-[13px] font-medium text-slate">{s.label}</div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          <div className="mx-auto mt-16 max-w-3xl space-y-6">
+          <div className="mx-auto max-w-3xl space-y-6">
             <Reveal>
               <h2 className="text-[1.7rem] font-extrabold leading-tight text-ink">Our story</h2>
             </Reveal>
@@ -75,9 +57,8 @@ export default function AboutPage() {
               <p className="text-[16px] leading-relaxed text-slate">
                 We brought the whole process under one roof: company formation, EINs, and ITINs,
                 handled by Certifying Acceptance Agents who can verify your identity without you ever
-                posting an original passport. Today we&apos;ve helped {trust.founders} founders across{" "}
-                {trust.countries} countries get set up and get paid — and we treat every new client
-                with the same care.
+                posting an original passport. We help founders and sellers around the world get set
+                up and get paid — and we treat every new client with the same care.
               </p>
             </Reveal>
           </div>

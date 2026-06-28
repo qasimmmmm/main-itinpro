@@ -1,6 +1,6 @@
 import Reveal from "./Reveal";
 import SectionHead from "./SectionHead";
-import { testimonials, trust } from "@/lib/content";
+import { testimonials } from "@/lib/content";
 
 function Stars() {
   return (
@@ -18,31 +18,11 @@ export default function Testimonials() {
   return (
     <section className="bg-white py-20 lg:py-24">
       <div className="container-x">
-        <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
-          <SectionHead
-            eyebrow="Client stories"
-            title="Founders in 150+ countries trust us with their US setup"
-            intro="From Amazon sellers to freelancers and SaaS founders — here's what people say after we've handled their ITIN, LLC and EIN."
-          />
-          <Reveal delay={120}>
-            <a
-              href={trust.reviewUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex shrink-0 items-center gap-3 rounded-xl2 border border-mist bg-paper px-5 py-4 transition-colors hover:border-emerald/40"
-            >
-              <div className="flex flex-col">
-                <span className="font-display text-2xl font-extrabold text-ink">{trust.rating}</span>
-                <Stars />
-              </div>
-              <div className="border-l border-mist pl-3 text-[13px] leading-tight text-slate">
-                <span className="font-semibold text-ink">{trust.reviewCount}</span> reviews
-                <br />
-                on {trust.reviewPlatform}
-              </div>
-            </a>
-          </Reveal>
-        </div>
+        <SectionHead
+          eyebrow="Client stories"
+          title="What founders say about working with us"
+          intro="From Amazon sellers to freelancers and SaaS founders — here's what people say after we've handled their ITIN, LLC and EIN."
+        />
 
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {testimonials.map((t, i) => (
