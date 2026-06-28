@@ -1,0 +1,17 @@
+<svg width="220" height="56" viewBox="0 0 220 56" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ITIN-Pro">
+  <defs>
+    <linearGradient id="lp-navy" x1="4" y1="4" x2="48" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0E2C44"/>
+      <stop offset="1" stop-color="#0B2238"/>
+    </linearGradient>
+    <linearGradient id="lp-check" x1="14" y1="20" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#16B981"/>
+      <stop offset="1" stop-color="#0F9D6E"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="4" width="48" height="48" rx="13" fill="url(#lp-navy)"/>
+  <rect x="5" y="7" width="42" height="42" rx="10" fill="none" stroke="#C79A3E" stroke-opacity="0.55" stroke-width="1.3"/>
+  <path d="M15 28.5L23 36.5L38.5 19.5" stroke="url(#lp-check)" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38.5 11.5c0.5 2.9 1.2 3.6 4.1 4.1-2.9 0.5-3.6 1.2-4.1 4.1-0.5-2.9-1.2-3.6-4.1-4.1 2.9-0.5 3.6-1.2 4.1-4.1Z" fill="#C79A3E"/>
+  <text x="64" y="36" font-family="'Hanken Grotesk','Segoe UI',Arial,sans-serif" font-size="26" font-weight="800" letter-spacing="-0.5" fill="#0B2238">ITIN<tspan fill="#0F9D6E">-Pro</tspan></text>
+</svg>
