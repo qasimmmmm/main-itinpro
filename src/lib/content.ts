@@ -240,3 +240,57 @@ export const faqs = [
 // ── Partner / referral logos (only list ones you genuinely work with) ────────
 export const partnersNote =
   "Trusted by founders who also use Stripe, Payoneer, Mercury, Wise and Amazon.";
+
+// ── Upsell add-ons (order bumps shown on checkout) ───────────────────────────
+export interface AddOn {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  badge?: string;
+  appliesTo: ServiceKey[]; // which base services this add-on is offered for
+}
+
+export const addOns: AddOn[] = [
+  {
+    id: "expedited",
+    name: "Priority processing",
+    description:
+      "Skip the queue. We prepare and file your documents ahead of standard orders, with priority support.",
+    price: 99,
+    badge: "Most added",
+    appliesTo: ["itin", "llc", "bundle"],
+  },
+  {
+    id: "add-itin",
+    name: "Add ITIN application",
+    description:
+      "Get your personal US Tax ID alongside your company — prepared and certified by a CAA.",
+    price: pricing.itin.price,
+    appliesTo: ["llc"],
+  },
+  {
+    id: "add-llc",
+    name: "Add US LLC + EIN + Business Address",
+    description:
+      "Form a real US company so banking and payment platforms are far easier to approve.",
+    price: pricing.llc.price,
+    appliesTo: ["itin"],
+  },
+  {
+    id: "bank",
+    name: "US bank account setup assistance",
+    description:
+      "We prepare and submit your Mercury, Wise or US bank applications so you can hold USD.",
+    price: 99,
+    appliesTo: ["itin", "llc", "bundle"],
+  },
+  {
+    id: "agent-year",
+    name: "Extra year of registered agent + address",
+    description:
+      "Add a second year of registered agent service and US business address up front and lock today's rate.",
+    price: pricing.registeredAgentRenewal,
+    appliesTo: ["llc", "bundle"],
+  },
+];
