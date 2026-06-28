@@ -34,6 +34,12 @@ That's it. Country personalization works automatically on Vercel because Vercel 
 | Variable | Purpose | Example |
 |---|---|---|
 | `NEXT_PUBLIC_GOOGLE_ADS_ID` | Google Ads / gtag conversion ID. Falls back to the value in `src/lib/content.ts` if unset. | `AW-17487871342` |
+| `NEXT_PUBLIC_NMI_TOKENIZATION_KEY` | **Public** NMI Collect.js key (browser). Enables card fields on `/checkout`. | `...` |
+| `NMI_SECURITY_KEY` | **Private** NMI security key (server only — never prefix with `NEXT_PUBLIC_`). Charges cards. | `...` |
+
+**Payments:** the checkout uses NMI (Collect.js + Payment API). Full setup, testing and
+go-live steps are in **`CHECKOUT-SETUP.md`**. Until the two NMI keys are set, `/checkout`
+shows a "setup needed" banner and the rest of the site works normally.
 
 A `.env.example` is included. Copy it to `.env.local` for local development.
 

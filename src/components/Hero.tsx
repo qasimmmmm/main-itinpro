@@ -63,7 +63,7 @@ export default function Hero({ geo }: { geo: GeoInfo }) {
               </span>
             </div>
             <DocumentCard service="llc" />
-            <Link href="/apply?service=llc" className="btn-primary mt-5 w-full">
+            <Link href="/checkout?service=llc" className="btn-primary mt-5 w-full">
               Form your US company →
             </Link>
           </div>
@@ -78,7 +78,7 @@ export default function Hero({ geo }: { geo: GeoInfo }) {
               <span className="font-mono text-[12px] text-white/45">one-time</span>
             </div>
             <DocumentCard service="itin" />
-            <Link href="/apply?service=itin" className="btn-primary mt-5 w-full">
+            <Link href="/checkout?service=itin" className="btn-primary mt-5 w-full">
               Get your ITIN →
             </Link>
           </div>
@@ -97,7 +97,7 @@ export default function Hero({ geo }: { geo: GeoInfo }) {
         <p className="mt-3 text-center text-[14px] text-white/55">
           Need everything?{" "}
           <Link
-            href="/apply?service=llc-ein-itin"
+            href="/checkout?service=llc-ein-itin"
             className="font-semibold text-emerald underline-offset-2 hover:underline"
           >
             Get the complete LLC + EIN + ITIN package for ${pricing.bundle.price}

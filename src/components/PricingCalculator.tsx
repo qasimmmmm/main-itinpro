@@ -97,12 +97,12 @@ export default function PricingCalculator() {
           <p className="mt-1 text-[13px] text-slate">
             Renews at ${pricing.llc.renewal}/yr for the agent &amp; address.
           </p>
-          <Link href="/apply?service=llc" className="btn-primary mt-4 w-full">
+          <Link href="/checkout?service=llc" className="btn-primary mt-4 w-full">
             Form my LLC →
           </Link>
           <p className="mt-3 text-center text-[12px] text-slate">
             Need a Tax ID too?{" "}
-            <Link href="/apply?service=llc-ein-itin" className="link-underline">
+            <Link href="/checkout?service=llc-ein-itin" className="link-underline">
               Add ITIN
             </Link>
           </p>

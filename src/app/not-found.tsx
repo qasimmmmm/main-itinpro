@@ -22,7 +22,7 @@ export default function NotFound() {
           <Link href="/" className="btn-primary">
             Back to home
           </Link>
-          <Link href="/apply?service=llc-ein-itin" className="btn-ghost-light">
+          <Link href="/checkout?service=llc-ein-itin" className="btn-ghost-light">
             Start your application
           </Link>
         </div>

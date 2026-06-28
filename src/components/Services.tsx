@@ -90,7 +90,7 @@ export default function Services() {
                   </ul>
 
                   <Link
-                    href={`/apply?service=${s.slug}`}
+                    href={`/checkout?service=${s.slug}`}
                     className={`mt-7 w-full ${featured ? "btn-primary" : "btn-ink"}`}
                   >
                     Get started

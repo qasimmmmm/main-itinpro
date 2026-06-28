@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
+import CardLogos from "./CardLogos";
 import { company } from "@/lib/content";
 
 const cols = [
@@ -109,12 +110,19 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="mt-8 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 text-sm text-white/45 sm:flex-row sm:items-center">
-          <p>
+        <div className="mt-8 flex flex-col items-start justify-between gap-5 border-t border-white/10 pt-6 sm:flex-row sm:items-center">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+            <CardLogos />
+            <p className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-white/45">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" strokeWidth="1.8" />
+                <path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" strokeWidth="1.8" />
+              </svg>
+              Secure SSL checkout
+            </p>
+          </div>
+          <p className="text-sm text-white/45">
             © {new Date().getFullYear()} {company.legalEntity}. All rights reserved.
-          </p>
-          <p className="font-mono text-[11px] uppercase tracking-[0.16em]">
-            Secure payments · 100% online
           </p>
         </div>
       </div>

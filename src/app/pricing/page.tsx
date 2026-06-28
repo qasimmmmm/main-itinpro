@@ -102,7 +102,7 @@ export default function PricingPage() {
               and US business address renew at ${pricing.registeredAgentRenewal}/year to keep your
               company in good standing. Some states also charge their own annual/franchise fee, which
               is separate. We&apos;ll confirm the exact figures for your state during onboarding.{" "}
-              <Link href="/apply?service=llc" className="font-semibold text-emerald-deep underline">
+              <Link href="/checkout?service=llc" className="font-semibold text-emerald-deep underline">
                 Start your LLC
               </Link>
               .

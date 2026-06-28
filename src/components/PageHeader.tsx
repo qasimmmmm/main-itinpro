@@ -39,7 +39,7 @@ export default function PageHeader({
         )}
         {cta && (
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link href="/apply?service=llc-ein-itin" className="btn-primary">
+            <Link href="/checkout?service=llc-ein-itin" className="btn-primary">
               Get started
             </Link>
             <Link href="/pricing" className="btn-ghost-light">

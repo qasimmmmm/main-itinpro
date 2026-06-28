@@ -83,7 +83,7 @@ export default function ServiceDetail({
                   <span className="font-display text-4xl font-extrabold text-ink">${price}</span>
                   <span className="font-mono text-[13px] text-slate">{priceNote}</span>
                 </div>
-                <Link href={`/apply?service=${applySlug}`} className="btn-primary mt-5 w-full">
+                <Link href={`/checkout?service=${applySlug}`} className="btn-primary mt-5 w-full">
                   Get started
                 </Link>
                 <Link href="/pricing" className="btn-ghost mt-2.5 w-full">

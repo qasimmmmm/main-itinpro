@@ -100,7 +100,7 @@ export default function ContactPage() {
                 Skip the back-and-forth — begin your application and we&apos;ll confirm your exact
                 price first.
               </p>
-              <Link href="/apply?service=llc-ein-itin" className="btn-primary mt-6 inline-flex">
+              <Link href="/checkout?service=llc-ein-itin" className="btn-primary mt-6 inline-flex">
                 Start your application
               </Link>
             </div>

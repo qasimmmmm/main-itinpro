@@ -38,7 +38,7 @@ export default function CTA() {
               </p>
 
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <Link href="/apply?service=llc-ein-itin" className="btn-primary w-full sm:w-auto">
+                <Link href="/checkout?service=llc-ein-itin" className="btn-primary w-full sm:w-auto">
                   Get started now
                 </Link>
                 <a
