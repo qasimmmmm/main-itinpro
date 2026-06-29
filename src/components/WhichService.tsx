@@ -1,8 +1,21 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import Reveal from "./Reveal";
 import SectionHead from "./SectionHead";
 
-const cards = [
+type ServiceCard = {
+  tag: string;
+  name: string;
+  plain: string;
+  body: string;
+  need: string;
+  href: string;
+  cta: string;
+  icon: ReactNode;
+  featured?: boolean;
+};
+
+const cards: ServiceCard[] = [
   {
     tag: "The company",
     name: "US LLC",

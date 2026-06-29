@@ -4,7 +4,16 @@ import SectionHead from "./SectionHead";
 import PricingCalculator from "./PricingCalculator";
 import { pricing } from "@/lib/content";
 
-const headline = [
+type Plan = {
+  name: string;
+  price: number;
+  note: string;
+  href: string;
+  desc: string;
+  best?: boolean;
+};
+
+const headline: Plan[] = [
   {
     name: "ITIN Application",
     price: pricing.itin.price,
