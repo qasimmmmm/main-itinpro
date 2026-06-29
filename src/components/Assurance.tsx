@@ -67,19 +67,38 @@ const items = [
 
 export default function Assurance() {
   return (
-    <section className="border-b border-mist bg-white">
-      <div className="container-x py-6">
-        <ul className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-5">
-          {items.map((it) => (
-            <li key={it.label} className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-tint text-emerald-deep">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  {it.icon}
-                </svg>
-              </span>
-              <span className="text-[13px] font-semibold leading-snug text-ink">{it.label}</span>
-            </li>
-          ))}
+    <section className="section-strip border-b border-mist bg-white">
+      <div className="container-x">
+        <ul className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-0 lg:divide-x lg:divide-mist">
+          {items.map((it, i) => {
+            const isCredential = i === 0;
+            return (
+              <li
+                key={it.label}
+                className="flex items-center gap-3 lg:px-5 lg:first:pl-0 lg:last:pr-0"
+              >
+                <span
+                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
+                    isCredential
+                      ? "bg-gold/10 text-gold ring-1 ring-gold/30"
+                      : "bg-emerald-tint text-emerald-deep"
+                  }`}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    {it.icon}
+                  </svg>
+                </span>
+                <span className="flex flex-col gap-1">
+                  {isCredential && (
+                    <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-gold">
+                      Official credential
+                    </span>
+                  )}
+                  <span className="text-[13px] font-semibold leading-snug text-ink">{it.label}</span>
+                </span>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </section>

@@ -52,7 +52,7 @@
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-semibold transition-all duration-200 ease-out;
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-semibold transition-all duration-200 ease-out;
   }
   .btn-primary {
     @apply btn bg-emerald text-white shadow-[0_8px_20px_-8px_rgba(15,157,110,0.7)] hover:bg-emerald-deep hover:-translate-y-0.5;
@@ -94,6 +94,55 @@
       linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     background-size: 44px 44px;
   }
+
+  /* ── Shared vocabulary (additive) ──────────────────────────────────────── */
+
+  /* Section rhythm */
+  .section        { @apply py-section lg:py-section-lg; }          /* 80→96  standard content */
+  .section-tight  { @apply py-section-tight lg:py-20; }            /* 64→80  CTA/Guarantee */
+  .section-strip  { @apply py-6; }                                  /* thin trust strips (Assurance/TrustBand) */
+
+  /* Dark institutional surface (scaffolding only; place atmosphere divs inside) */
+  .section-navy   { @apply relative overflow-hidden bg-ink text-white; }
+
+  /* Panels & cards */
+  .surface        { @apply rounded-xl2 border border-mist bg-white shadow-card; }       /* semantic alias of .card for non-card panels */
+  .surface-navy   { @apply rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.02]; } /* canonical dark card fill */
+  .panel-navy     { @apply rounded-3xl border border-white/10 bg-ink; }                 /* large navy shells (Hero/CTA/Guarantee) */
+
+  /* Dividers */
+  .divider        { @apply border-t border-mist; }
+  .divider-light  { @apply border-t border-white/10; }
+
+  /* Eyebrow on dark */
+  .eyebrow-light  { @apply eyebrow text-emerald-tint; }
+
+  /* Icon container — the SINGLE canonical icon square (light + dark variants) */
+  .icon-chip      { @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-tint text-emerald-deep; }
+  .icon-chip-dark { @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/[0.06] text-emerald-tint; }
+
+  /* Number badge (Process steps) */
+  .badge-num      { @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-tint font-mono text-sm font-semibold text-emerald-deep; }
+
+  /* Gold official seal chip — the ONLY sanctioned gold accent outside the Guarantee seal SVG */
+  .badge-seal     { @apply inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.16em] text-gold; }
+
+  /* Emerald check disc — light + on-dark. Put a 10px check SVG inside. */
+  .check          { @apply flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-emerald-tint text-emerald-deep; }
+  .check-on-dark  { @apply flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-emerald text-white; }
+
+  /* Secure-checkout cue row (reuse beside primary CTAs) */
+  .secure-note    { @apply inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-slate; }
+  .secure-note-dark { @apply inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-white/70; }
+
+  /* Bordered eyebrow chip on navy (Hero credential style) */
+  .chip-navy      { @apply inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-white/80; }
+
+  /* Objection/feature chip on navy */
+  .chip-feature   { @apply inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.05] px-3.5 py-1.5 text-[13px] text-white/85; }
+
+  /* Mobile sticky CTA bar wrapper (Chrome owns the component; class lives here) */
+  .mobile-cta-bar { @apply fixed inset-x-0 bottom-0 z-30 border-t border-mist bg-white/95 px-4 pt-3 backdrop-blur lg:hidden; padding-bottom: calc(0.75rem + env(safe-area-inset-bottom)); }
 }
 
 /* ── Scroll reveal ────────────────────────────────────────────────────────── */

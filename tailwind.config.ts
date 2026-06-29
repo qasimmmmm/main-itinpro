@@ -28,13 +28,26 @@ const config: Config = {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
+      spacing: {
+        section: "5rem",        // 80px  (mobile section pad)
+        "section-lg": "6rem",   // 96px  (desktop section pad)
+        "section-tight": "4rem",// 64px  (band/CTA mobile)
+      },
       borderRadius: {
         xl2: "1.25rem",
+        "3xl": "1.75rem",       // large navy panels (Hero shell, CTA, Guarantee, PageHeader)
       },
       boxShadow: {
         card: "0 1px 2px rgba(11,34,56,0.04), 0 12px 32px -12px rgba(11,34,56,0.12)",
         lift: "0 2px 4px rgba(11,34,56,0.05), 0 24px 48px -16px rgba(11,34,56,0.22)",
         doc: "0 24px 60px -20px rgba(11,34,56,0.45)",
+        hair: "inset 0 0 0 1px rgba(11,34,56,0.06)",            // crisp edge ring on paper
+        "emerald-glow": "0 8px 20px -8px rgba(15,157,110,0.7)", // codifies the btn-primary signature shadow
+      },
+      backgroundImage: {
+        // single reusable navy atmosphere so navy sections stop hand-rolling blobs
+        "navy-glow":
+          "radial-gradient(60% 50% at 20% 0%, rgba(15,157,110,0.18) 0%, transparent 60%), radial-gradient(50% 45% at 95% 10%, rgba(199,154,62,0.10) 0%, transparent 55%)",
       },
       maxWidth: {
         container: "1180px",
@@ -56,6 +69,7 @@ const config: Config = {
       animation: {
         "fade-up": "fade-up 0.6s cubic-bezier(0.16,1,0.3,1) both",
         "fade-in": "fade-in 0.6s ease both",
+        shimmer: "shimmer 2s linear infinite",  // keyframe existed but was dead
       },
     },
   },

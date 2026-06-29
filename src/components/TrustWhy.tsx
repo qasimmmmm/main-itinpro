@@ -54,10 +54,10 @@ const pillars = [
 
 export default function TrustWhy() {
   return (
-    <section className="relative overflow-hidden bg-ink py-20 text-white lg:py-24">
-      <div className="grid-texture absolute inset-0 opacity-100" aria-hidden="true" />
-      <div className="absolute -right-40 top-0 h-[28rem] w-[28rem] rounded-full bg-emerald/15 blur-[120px]" aria-hidden="true" />
-      <div className="container-x relative">
+    <section className="section-navy section">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 grid-texture" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-navy-glow" />
+      <div className="container-x relative z-10">
         <SectionHead
           eyebrow="Why founders trust us"
           title="Built to be trusted, not just hired"
@@ -66,17 +66,17 @@ export default function TrustWhy() {
           light
         />
 
-        <div className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {pillars.map((p, i) => (
-            <Reveal key={p.title} delay={i * 70}>
-              <div className="flex h-full flex-col">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.06] text-emerald ring-1 ring-white/10">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <Reveal key={p.title} delay={i < 3 ? i * 80 : 0}>
+              <div className="surface-navy flex h-full flex-col p-5">
+                <span className="icon-chip-dark h-11 w-11">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     {p.icon}
                   </svg>
-                </div>
-                <h3 className="mt-5 text-[17px] font-bold text-white">{p.title}</h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-white/60">{p.body}</p>
+                </span>
+                <h3 className="mt-5 text-[17px] font-bold leading-snug text-white">{p.title}</h3>
+                <p className="mt-2 text-[14px] leading-relaxed text-white/80">{p.body}</p>
               </div>
             </Reveal>
           ))}

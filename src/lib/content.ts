@@ -17,8 +17,8 @@ export const company = {
   addressLine2: "Jersey City, NJ 07306",
   country: "United States",
   email: "support@itin-pro.com",
-  whatsappDisplay: "+1 (551) 380-0279",
-  whatsappE164: "15513800279", // used to build wa.me links — digits only
+  whatsappDisplay: "+1 (415) 200-5716",
+  whatsappE164: "14152005716", // used to build wa.me links — digits only
   domain: SITE_URL.replace(/^https?:\/\//, ""),
   url: SITE_URL,
 };

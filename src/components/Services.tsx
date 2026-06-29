@@ -5,7 +5,7 @@ import { services } from "@/lib/content";
 
 export default function Services() {
   return (
-    <section id="services" className="scroll-mt-20 bg-white py-20 lg:py-24">
+    <section id="services" className="section scroll-mt-20 bg-white">
       <div className="container-x">
         <SectionHead
           eyebrow="Our services"
@@ -19,82 +19,140 @@ export default function Services() {
             return (
               <Reveal key={s.key} delay={i * 90}>
                 <div
-                  className={`relative flex h-full flex-col rounded-xl2 p-7 transition-all duration-300 hover:-translate-y-1 ${
+                  className={`group relative flex h-full flex-col rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 ${
                     featured
                       ? "bg-ink text-white shadow-lift ring-1 ring-emerald/30"
                       : "card hover:shadow-lift"
                   }`}
                 >
                   {featured && (
-                    <span className="absolute right-6 top-7 rounded-full bg-emerald px-3 py-1 text-[11px] font-semibold text-white">
-                      MOST POPULAR
-                    </span>
+                    <>
+                      {/* subtle navy atmosphere on the featured card */}
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl"
+                      >
+                        <div className="absolute inset-0 grid-texture opacity-60" />
+                        <div className="absolute -right-10 -top-12 h-40 w-40 rounded-full bg-emerald/20 blur-3xl" />
+                      </div>
+                      <span className="badge-seal absolute right-6 top-6 z-10">
+                        <span
+                          className="h-1.5 w-1.5 rounded-full bg-emerald"
+                          aria-hidden="true"
+                        />
+                        Most popular
+                      </span>
+                    </>
                   )}
-                  <h3
-                    className={`text-xl font-bold ${featured ? "text-white" : "text-ink"}`}
-                  >
-                    {s.name}
-                  </h3>
-                  <p
-                    className={`mt-1 text-sm ${
-                      featured ? "text-white/55" : "text-slate"
-                    }`}
-                  >
-                    {s.tagline}
-                  </p>
 
-                  <div className="mt-5 flex items-baseline gap-1.5">
-                    <span
-                      className={`font-display text-3xl font-extrabold ${
+                  <div className="relative z-10 flex h-full flex-col">
+                    <h3
+                      className={`text-xl font-bold leading-snug ${
                         featured ? "text-white" : "text-ink"
                       }`}
                     >
-                      ${s.price}
-                    </span>
-                    <span
-                      className={`font-mono text-[12px] ${
-                        featured ? "text-white/45" : "text-slate"
+                      {s.name}
+                    </h3>
+                    <p
+                      className={`mt-1.5 text-[14px] leading-snug ${
+                        featured ? "text-white/70" : "text-slate"
                       }`}
                     >
-                      {s.priceNote}
-                    </span>
+                      {s.tagline}
+                    </p>
+
+                    <div className="mt-5 flex items-baseline gap-1.5">
+                      <span
+                        className={`font-display text-3xl font-extrabold leading-none sm:text-[2.1rem] ${
+                          featured ? "text-white" : "text-ink"
+                        }`}
+                      >
+                        ${s.price}
+                      </span>
+                      <span
+                        className={`font-mono text-[12px] ${
+                          featured ? "text-white/70" : "text-slate"
+                        }`}
+                      >
+                        {s.priceNote}
+                      </span>
+                    </div>
+
+                    <div
+                      className={`mt-6 mb-5 ${
+                        featured ? "divider-light" : "divider"
+                      }`}
+                      aria-hidden="true"
+                    />
+
+                    <ul className="flex-1 space-y-3">
+                      {s.includes.map((it) => (
+                        <li key={it} className="flex items-start gap-2.5">
+                          <span
+                            className={`mt-0.5 ${featured ? "check-on-dark" : "check"}`}
+                          >
+                            <svg
+                              width="10"
+                              height="10"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              aria-hidden="true"
+                            >
+                              <path
+                                d="M5 12l5 5 9-11"
+                                stroke="currentColor"
+                                strokeWidth="2.8"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </span>
+                          <span
+                            className={`text-[14px] leading-snug ${
+                              featured ? "text-white/85" : "text-ink/80"
+                            }`}
+                          >
+                            {it}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <Link
+                      href={`/checkout?service=${s.slug}`}
+                      className={`mt-7 w-full ${featured ? "btn-primary" : "btn-ink"}`}
+                    >
+                      Get started
+                    </Link>
+
+                    {featured && (
+                      <span className="secure-note-dark mt-3 justify-center">
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"
+                            stroke="currentColor"
+                            strokeWidth="1.8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M9 12l2 2 4-4"
+                            stroke="currentColor"
+                            strokeWidth="1.8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        Secure checkout
+                      </span>
+                    )}
                   </div>
-
-                  <ul className="mt-6 flex-1 space-y-3">
-                    {s.includes.map((it) => (
-                      <li key={it} className="flex items-start gap-2.5">
-                        <span
-                          className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full ${
-                            featured ? "bg-emerald" : "bg-emerald-tint"
-                          }`}
-                        >
-                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path
-                              d="M5 12l5 5 9-11"
-                              stroke={featured ? "#fff" : "#0B7A55"}
-                              strokeWidth="3"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </span>
-                        <span
-                          className={`text-[14px] leading-snug ${
-                            featured ? "text-white/80" : "text-ink/80"
-                          }`}
-                        >
-                          {it}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link
-                    href={`/checkout?service=${s.slug}`}
-                    className={`mt-7 w-full ${featured ? "btn-primary" : "btn-ink"}`}
-                  >
-                    Get started
-                  </Link>
                 </div>
               </Reveal>
             );

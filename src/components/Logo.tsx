@@ -11,7 +11,7 @@ export default function Logo({
     <Link
       href="/"
       aria-label="ITIN-Pro home"
-      className={`inline-flex items-center gap-2.5 ${className}`}
+      className={`group inline-flex items-center gap-2.5 ${className}`}
     >
       <svg
         width="36"
@@ -20,7 +20,7 @@ export default function Logo({
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
-        className="shrink-0"
+        className="shrink-0 transition-transform duration-300 ease-out group-hover:-translate-y-0.5"
       >
         <defs>
           <linearGradient id="hn" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
@@ -57,7 +57,7 @@ export default function Logo({
         />
       </svg>
       <span
-        className={`font-display text-[20px] font-extrabold tracking-tight ${
+        className={`font-display text-[20px] font-extrabold leading-none tracking-tight ${
           light ? "text-white" : "text-ink"
         }`}
       >

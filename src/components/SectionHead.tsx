@@ -17,12 +17,19 @@ export default function SectionHead({
   return (
     <Reveal>
       <div className={`max-w-2xl ${center ? "mx-auto text-center" : ""}`}>
-        <span className="eyebrow">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald" />
-          {eyebrow}
-        </span>
+        {light ? (
+          <span className="eyebrow-light">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald" aria-hidden="true" />
+            {eyebrow}
+          </span>
+        ) : (
+          <span className="eyebrow">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald" aria-hidden="true" />
+            {eyebrow}
+          </span>
+        )}
         <h2
-          className={`mt-3 text-balance text-[2rem] font-extrabold leading-[1.1] sm:text-[2.5rem] ${
+          className={`mt-4 text-balance text-[2rem] font-extrabold leading-[1.1] sm:text-[2.5rem] ${
             light ? "text-white" : "text-ink"
           }`}
         >
@@ -31,7 +38,7 @@ export default function SectionHead({
         {intro && (
           <p
             className={`mt-4 text-[17px] leading-relaxed ${
-              light ? "text-white/65" : "text-slate"
+              light ? "text-white/80" : "text-slate"
             }`}
           >
             {intro}
