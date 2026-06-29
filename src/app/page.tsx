@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import Assurance from "@/components/Assurance";
 import TrustBand from "@/components/TrustBand";
 import WhichService from "@/components/WhichService";
 import WhyItin from "@/components/WhyItin";
@@ -18,6 +19,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <Assurance />
       <TrustBand />
       <WhichService />
       <WhyItin />

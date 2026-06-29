@@ -34,9 +34,9 @@ export default function Hero() {
           </h1>
 
           <p className="mx-auto mt-5 max-w-xl text-[17px] leading-relaxed text-white/65">
-            Get your ITIN, form a US LLC and get your EIN — 100% online. Access US banking,
-            launch your store, and get paid on Stripe, Amazon and PayPal. Nothing original
-            ever mailed to the US.
+            Form your US LLC, get your EIN and ITIN, and apply for US banking — 100% online,
+            no SSN and no US visit. Done for you by IRS Certifying Acceptance Agents, for
+            founders who&apos;ve never done this before.
           </p>
 
           {/* Objection-killer chips — the four things non-residents worry about */}
