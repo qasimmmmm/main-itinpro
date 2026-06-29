@@ -40,6 +40,26 @@ export default function Hero({ geo }: { geo: GeoInfo }) {
             launch your store, and get paid on Stripe, Amazon and PayPal. Nothing original
             ever mailed to the US.
           </p>
+
+          {/* Objection-killer chips — the four things non-residents worry about */}
+          <ul className="mx-auto mt-7 flex max-w-2xl flex-wrap items-center justify-center gap-x-3 gap-y-2.5">
+            {[
+              "No US visit required",
+              "No SSN needed",
+              "100% online",
+              "Works from 150+ countries",
+            ].map((chip) => (
+              <li
+                key={chip}
+                className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.05] px-3.5 py-1.5 text-[13px] font-medium text-white/85"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="shrink-0">
+                  <path d="M5 12l5 5 9-11" stroke="#0F9D6E" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                {chip}
+              </li>
+            ))}
+          </ul>
         </div>
 
         {geo.restricted && (

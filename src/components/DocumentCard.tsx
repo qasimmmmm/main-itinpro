@@ -90,7 +90,7 @@ function BundleCard() {
           Complete US setup
         </p>
         <span className="rounded-full bg-emerald-tint px-2.5 py-1 text-[10px] font-semibold text-emerald-deep">
-          BEST VALUE
+          COMPLETE SETUP
         </span>
       </div>
       <ul className="mt-5 space-y-3">

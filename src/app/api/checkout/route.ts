@@ -53,6 +53,21 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: false, message: "Your cart is empty." }, { status: 400 });
   }
 
+  // Basic server-side validation (the endpoint is publicly callable, not only via our UI).
+  const email = customer?.email?.trim() || "";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return NextResponse.json(
+      { success: false, message: "Please enter a valid email address." },
+      { status: 400 }
+    );
+  }
+  if (!billing?.address1?.trim() || !billing?.zip?.trim()) {
+    return NextResponse.json(
+      { success: false, message: "Please complete your billing address." },
+      { status: 400 }
+    );
+  }
+
   const securityKey = process.env.NMI_SECURITY_KEY;
   if (!securityKey) {
     // Helps during setup: clear message instead of a silent failure.

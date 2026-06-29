@@ -19,18 +19,6 @@ export const company = {
 // Analytics — set in .env as NEXT_PUBLIC_GOOGLE_ADS_ID, falls back to this.
 export const googleAdsId = "AW-17487871342";
 
-// ── Trust signals ────────────────────────────────────────────────────────────
-// IMPORTANT: replace these with your REAL Trustpilot numbers before going live.
-export const trust = {
-  rating: "4.9",
-  reviewCount: "120+",
-  reviewPlatform: "Trustpilot",
-  reviewUrl: "https://www.trustpilot.com/review/itin-pro.com",
-  founders: "7,000+",
-  countries: "150+",
-  languages: "8",
-  since: "2017",
-};
 
 // ── Pricing (matches the market-standard pricing model) ──────────────────────
 export const pricing = {
@@ -173,33 +161,6 @@ export const comparison = {
   ],
 };
 
-// ── Testimonials (replace with your own verified reviews before launch) ──────
-export const testimonials = [
-  {
-    quote:
-      "I run an Amazon store from Lahore. They handled my LLC, EIN and ITIN together and walked me through the Payoneer and Stripe setup. Everything just worked.",
-    name: "Bilal R.",
-    role: "Amazon seller · Pakistan",
-  },
-  {
-    quote:
-      "I'd been stuck for months because PayPal kept asking for a tax ID. ITIN-Pro got my ITIN issued and I was finally able to withdraw. Clear communication the whole way.",
-    name: "Marie L.",
-    role: "Freelancer · France",
-  },
-  {
-    quote:
-      "As a non-resident I had no idea where to start. They explained each step, certified my passport so I didn't have to post anything, and kept me updated until it arrived.",
-    name: "Daniel S.",
-    role: "Founder · Brazil",
-  },
-  {
-    quote:
-      "Fast, professional and honest about timelines. The all-in price for my state was shown upfront — no surprises at checkout. Highly recommend.",
-    name: "Omar K.",
-    role: "E-commerce · UAE",
-  },
-];
 
 // ── FAQ (our own answers, covering the topics buyers actually ask) ───────────
 export const faqs = [
@@ -237,9 +198,6 @@ export const faqs = [
   },
 ];
 
-// ── Partner / referral logos (only list ones you genuinely work with) ────────
-export const partnersNote =
-  "Trusted by founders who also use Stripe, Payoneer, Mercury, Wise and Amazon.";
 
 // ── Upsell add-ons (order bumps shown on checkout) ───────────────────────────
 export interface AddOn {

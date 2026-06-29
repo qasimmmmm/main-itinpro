@@ -5,10 +5,7 @@ import { NextResponse, type NextRequest } from "next/server";
 // personalize content with no client-side flash. Locally this header is absent,
 // so pages fall back to neutral copy automatically.
 export function middleware(request: NextRequest) {
-  const country =
-    request.headers.get("x-vercel-ip-country") ||
-    request.geo?.country ||
-    "";
+  const country = request.headers.get("x-vercel-ip-country") || "";
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-user-country", country);

@@ -30,14 +30,14 @@ export default function PricingCalculator() {
       <div className="grid gap-0 sm:grid-cols-[1fr_auto]">
         <div className="px-6 py-6 sm:px-8">
           <label
-            htmlFor="state"
+            htmlFor="pc-state"
             className="font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-slate"
           >
             Formation state
           </label>
           <div className="relative mt-2">
             <select
-              id="state"
+              id="pc-state"
               value={state}
               onChange={(e) => setState(e.target.value)}
               className="w-full appearance-none rounded-xl border border-mist bg-white px-4 py-3 pr-10 text-[15px] font-medium text-ink outline-none transition-colors focus:border-emerald"

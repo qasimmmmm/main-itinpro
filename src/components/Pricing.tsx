@@ -51,7 +51,7 @@ export default function Pricing() {
               >
                 {p.best && (
                   <span className="mb-3 inline-flex w-fit rounded-full bg-emerald-tint px-2.5 py-1 text-[11px] font-semibold text-emerald-deep">
-                    BEST VALUE
+                    MOST POPULAR
                   </span>
                 )}
                 <h3 className="text-[15px] font-semibold text-ink">{p.name}</h3>

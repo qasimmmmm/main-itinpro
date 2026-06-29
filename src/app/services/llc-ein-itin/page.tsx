@@ -39,8 +39,8 @@ export default function BundlePage() {
           body: "With a US LLC, an EIN for the company, an ITIN for you, and a US business address, you have everything platforms ask for. You can open US business banking, get approved on Stripe, PayPal, Amazon and Mercury, hold and receive USD, and operate as a legitimate US business from anywhere in the world.",
         },
         {
-          heading: "Is this the best value?",
-          body: `Bought separately, the ITIN ($${pricing.itin.price}) and the LLC + EIN + Address ($${pricing.llc.price}) would total more than the bundle. The complete package brings the whole setup to $${pricing.bundle.price} plus your state's filing fee — the most cost-effective way to get fully operational in one go.`,
+          heading: "Why bundle instead of buying separately?",
+          body: `The complete package is the same total as ordering the ITIN ($${pricing.itin.price}) and the LLC + EIN + Address ($${pricing.llc.price}) on their own — $${pricing.bundle.price} plus your state's filing fee. What you gain is coordination: one team sequences your formation, EIN and ITIN in the right order, so steps that depend on each other never stall — and you reach a fully operational US business faster, with a single point of contact.`,
         },
         {
           heading: "What happens after year one?",

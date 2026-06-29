@@ -64,10 +64,6 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
   },
   robots: { index: true, follow: true },
-  icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/icon-192.png", sizes: "192x192" }],
-    apple: [{ url: "/apple-icon.png" }],
-  },
 };
 
 const orgJsonLd = {
