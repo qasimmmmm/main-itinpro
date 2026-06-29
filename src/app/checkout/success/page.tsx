@@ -4,11 +4,15 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { company } from "@/lib/content";
+import { formatUSD } from "@/lib/money";
 
 function SuccessInner() {
   const params = useSearchParams();
-  const tx = params.get("tx") || "";
-  const amt = params.get("amt") || "";
+  // These come from the URL and are display-only — sanitize so a crafted link
+  // can't render arbitrary markup/values as an official-looking receipt.
+  const tx = (params.get("tx") || "").replace(/[^A-Za-z0-9-]/g, "").slice(0, 40);
+  const amtNum = Number(params.get("amt"));
+  const amt = Number.isFinite(amtNum) && amtNum > 0 ? formatUSD(amtNum) : "";
 
   const wa = `https://wa.me/${company.whatsappE164}?text=${encodeURIComponent(
     `Hi ITIN-Pro, I just completed my order${tx ? ` (ref ${tx})` : ""} and I'm ready to start onboarding.`
@@ -35,7 +39,7 @@ function SuccessInner() {
         {amt && (
           <div className="flex items-center justify-between pt-3">
             <span className="text-[13px] font-semibold uppercase tracking-wide text-slate">Amount paid</span>
-            <span className="font-mono text-[14px] font-semibold text-ink">${amt}</span>
+            <span className="font-mono text-[14px] font-semibold text-ink">{amt}</span>
           </div>
         )}
       </div>

@@ -1,11 +1,9 @@
 import Link from "next/link";
 import DocumentCard from "./DocumentCard";
 import { pricing } from "@/lib/content";
-import type { GeoInfo } from "@/lib/geo";
+import { GeoPlace, GeoFlag, GeoRestrictedNote } from "./geo-client";
 
-export default function Hero({ geo }: { geo: GeoInfo }) {
-  const place = geo.known && !geo.restricted ? `from ${geo.name}` : "from anywhere";
-
+export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-ink text-white">
       {/* atmosphere */}
@@ -23,7 +21,7 @@ export default function Hero({ geo }: { geo: GeoInfo }) {
         {/* Top: badge + headline + subhead */}
         <div className="mx-auto max-w-3xl animate-fade-up text-center">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1.5">
-            <span className="text-base leading-none">{geo.known ? geo.flag : "🌍"}</span>
+            <span className="text-base leading-none"><GeoFlag /></span>
             <span className="font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-emerald-tint">
               IRS Certifying Acceptance Agents
             </span>
@@ -32,7 +30,7 @@ export default function Hero({ geo }: { geo: GeoInfo }) {
           <h1 className="font-display text-[2.4rem] font-extrabold leading-[1.06] sm:text-[3.1rem] lg:text-[3.5rem]">
             Start your US business
             <br />
-            <span className="text-emerald">{place}.</span>
+            <span className="text-emerald"><GeoPlace />.</span>
           </h1>
 
           <p className="mx-auto mt-5 max-w-xl text-[17px] leading-relaxed text-white/65">
@@ -62,12 +60,7 @@ export default function Hero({ geo }: { geo: GeoInfo }) {
           </ul>
         </div>
 
-        {geo.restricted && (
-          <div className="mx-auto mt-6 max-w-xl rounded-xl border border-gold/30 bg-gold/10 p-4 text-center text-sm text-gold-soft">
-            Due to US sanctions we may be unable to serve your country directly. Message us
-            first and we&apos;ll confirm your eligibility before you pay.
-          </div>
-        )}
+        <GeoRestrictedNote />
 
         {/* Two offers, lower prices forward */}
         <div className="mx-auto mt-12 grid max-w-4xl gap-6 md:grid-cols-2">

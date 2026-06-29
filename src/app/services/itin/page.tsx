@@ -3,7 +3,7 @@ import ServiceDetail from "@/components/ServiceDetail";
 import { pricing } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "ITIN Application for Non-Residents — $348",
+  title: `ITIN Application for Non-Residents — $${pricing.itin.price}`,
   description:
     "Get your US Individual Taxpayer Identification Number (ITIN) without an SSN. Prepared and certified by IRS Certifying Acceptance Agents, 100% online — no need to mail your original passport.",
   alternates: { canonical: "/services/itin" },

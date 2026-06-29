@@ -3,7 +3,7 @@ import ServiceDetail from "@/components/ServiceDetail";
 import { pricing } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Form a US LLC + EIN + Business Address — $298",
+  title: `Form a US LLC + EIN + Business Address — $${pricing.llc.price}`,
   description:
     "Form a US LLC in any state as a non-resident, get your EIN from the IRS, and receive a US business address with unlimited mail scans. 100% online, registered agent included for year one.",
   alternates: { canonical: "/services/llc" },
@@ -16,7 +16,7 @@ export default function LlcPage() {
       title="Form a real US company — remotely, in any state"
       intro="Launch a US LLC without leaving your country. You get the formation paperwork, your EIN from the IRS, a US business address with unlimited mail scans, and registered agent service for the first year."
       price={pricing.llc.price}
-      priceNote="+ state fee · renews $298/yr"
+      priceNote={`+ state fee · renews $${pricing.llc.renewal}/yr`}
       cardKey="llc"
       applySlug="llc"
       includes={[

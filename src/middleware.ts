@@ -13,12 +13,16 @@ export function middleware(request: NextRequest) {
   const response = NextResponse.next({
     request: { headers: requestHeaders },
   });
-  // Also expose to the client if ever needed.
+  // Expose to the client for static-page personalization (see geo-client.tsx).
+  // Intentionally NOT httpOnly — the homepage hero reads it in the browser so the
+  // page can stay statically cached. The value is a non-sensitive ISO country
+  // code; `secure` keeps it HTTPS-only in production.
   if (country) {
     response.cookies.set("user-country", country, {
       path: "/",
       maxAge: 60 * 60 * 24,
       sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
     });
   }
   return response;

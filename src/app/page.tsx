@@ -1,5 +1,3 @@
-import { headers } from "next/headers";
-import { resolveGeo } from "@/lib/geo";
 import Hero from "@/components/Hero";
 import TrustBand from "@/components/TrustBand";
 import WhichService from "@/components/WhichService";
@@ -13,16 +11,13 @@ import TrustWhy from "@/components/TrustWhy";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 
-// Geo depends on a per-request header, so render dynamically.
-export const dynamic = "force-dynamic";
+// Geo personalization happens in small client islands (Hero) reading the
+// middleware-set cookie, so this stays a fully static, cached route.
 
 export default function HomePage() {
-  const country = headers().get("x-user-country");
-  const geo = resolveGeo(country);
-
   return (
     <>
-      <Hero geo={geo} />
+      <Hero />
       <TrustBand />
       <WhichService />
       <WhyItin />

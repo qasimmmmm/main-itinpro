@@ -3,6 +3,11 @@
 // Edit values here and they update across the whole site.
 // ─────────────────────────────────────────────────────────────────────────────
 
+// Canonical site origin. Driven by env so preview/staging deployments and any
+// future domain rename self-canonicalize instead of pointing at the production
+// host. Falls back to production. No trailing slash.
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://itin-pro.com").replace(/\/$/, "");
+
 export const company = {
   brand: "ITIN-Pro",
   // Shows on customers' card statements (NMI dynamic descriptor). Keep <= 25 chars.
@@ -14,8 +19,8 @@ export const company = {
   email: "support@itin-pro.com",
   whatsappDisplay: "+1 (551) 380-0279",
   whatsappE164: "15513800279", // used to build wa.me links — digits only
-  domain: "itin-pro.com",
-  url: "https://itin-pro.com",
+  domain: SITE_URL.replace(/^https?:\/\//, ""),
+  url: SITE_URL,
 };
 
 // Analytics — set in .env as NEXT_PUBLIC_GOOGLE_ADS_ID, falls back to this.
@@ -23,23 +28,22 @@ export const googleAdsId = "AW-17487871342";
 
 
 // ── Pricing (matches the market-standard pricing model) ──────────────────────
+// Single annual-renewal constant so the agent + address renewal price has exactly
+// one definition across the Hero, calculator and pricing/service pages.
+const ANNUAL_RENEWAL = 298;
+
 export const pricing = {
   itin: {
     price: 348,
-    label: "ITIN Application",
   },
   llc: {
     price: 298,
-    label: "LLC + EIN + Business Address",
-    note: "plus state filing fee",
-    renewal: 298,
+    renewal: ANNUAL_RENEWAL,
   },
   bundle: {
     price: 646,
-    label: "LLC + EIN + ITIN",
-    note: "everything you need to operate, plus state filing fee",
   },
-  registeredAgentRenewal: 298,
+  registeredAgentRenewal: ANNUAL_RENEWAL,
 };
 
 export type ServiceKey = "itin" | "llc" | "bundle";
@@ -69,7 +73,7 @@ export const services = [
     name: "US LLC + EIN + Business Address",
     tagline: "A real US company, formed remotely",
     price: pricing.llc.price,
-    priceNote: "plus state fee · renews $298/yr",
+    priceNote: `plus state fee · renews $${pricing.llc.renewal}/yr`,
     summary:
       "Form your LLC in any of the 50 states, get your EIN from the IRS, and receive a US business address with unlimited mail scans — all without leaving your country.",
     includes: [
@@ -180,7 +184,7 @@ export const faqs = [
   },
   {
     q: "How much does it cost to keep the company running each year?",
-    a: "After the first year, the registered agent and US business address renew at $298/year. That keeps your company in good standing and your mail address active with unlimited scans. State franchise/annual fees (where a state charges them) are separate and depend on the state you choose.",
+    a: `After the first year, the registered agent and US business address renew at $${pricing.registeredAgentRenewal}/year. That keeps your company in good standing and your mail address active with unlimited scans. State franchise/annual fees (where a state charges them) are separate and depend on the state you choose.`,
   },
   {
     q: "Do you open my Stripe, PayPal or US bank account?",

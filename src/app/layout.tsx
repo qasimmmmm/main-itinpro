@@ -5,7 +5,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { company, googleAdsId } from "@/lib/content";
+import { company, googleAdsId, pricing } from "@/lib/content";
 
 const display = Hanken_Grotesk({
   subsets: ["latin"],
@@ -34,8 +34,7 @@ export const metadata: Metadata = {
     default: "ITIN-Pro — ITIN, US LLC & EIN for Non-Residents | Apply Online",
     template: "%s | ITIN-Pro",
   },
-  description:
-    "Get your ITIN, form a US LLC and get your EIN — 100% online, nothing mailed to the US. Get paid on Stripe, Amazon and PayPal. IRS Certifying Acceptance Agents. From $298.",
+  description: `Get your ITIN, form a US LLC and get your EIN — 100% online, nothing mailed to the US. Get paid on Stripe, Amazon and PayPal. IRS Certifying Acceptance Agents. From $${pricing.llc.price}.`,
   keywords: [
     "ITIN application",
     "ITIN for non residents",
@@ -61,7 +60,7 @@ export const metadata: Metadata = {
     title: "ITIN-Pro — ITIN, US LLC & EIN for Non-Residents",
     description:
       "Your US Tax ID, LLC and EIN — done online. Get paid on Stripe, PayPal and Amazon.",
-    images: ["/og-image.png"],
+    images: [{ url: "/og-image.png", alt: "ITIN-Pro — ITIN, US LLC & EIN for non-residents" }],
   },
   robots: { index: true, follow: true },
 };

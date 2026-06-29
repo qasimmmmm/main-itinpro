@@ -6,6 +6,7 @@
 
 import { pricing, addOns, type ServiceKey, type AddOn } from "./content";
 import { STATE_FEES } from "./states";
+import { roundMoney } from "./money";
 
 export const SLUG_TO_KEY: Record<string, ServiceKey> = {
   itin: "itin",
@@ -17,7 +18,6 @@ export interface OrderLine {
   id: string;
   label: string;
   amount: number;
-  recurring?: boolean;
 }
 
 export interface Order {
@@ -25,6 +25,10 @@ export interface Order {
   total: number;
   serviceKey: ServiceKey;
   hasStateFee: boolean;
+  /** False when the supplied slug was unknown/empty (the route must reject, not charge). */
+  serviceResolved: boolean;
+  /** For a service that requires a state, whether the supplied state actually resolved. */
+  stateApplied: boolean;
 }
 
 export function baseFor(serviceKey: ServiceKey) {
@@ -52,14 +56,23 @@ export function computeOrder(params: {
   stateName?: string;
   addOnIds?: string[];
 }): Order {
-  const serviceKey: ServiceKey = SLUG_TO_KEY[params.serviceSlug] ?? "bundle";
+  // Resolve the slug strictly. An unknown/empty slug is reported via
+  // `serviceResolved: false` (rather than silently falling back to the most
+  // expensive product) so the server can reject it instead of mischarging.
+  const resolvedKey = SLUG_TO_KEY[params.serviceSlug];
+  const serviceResolved = Boolean(resolvedKey);
+  const serviceKey: ServiceKey = resolvedKey ?? "bundle";
   const base = baseFor(serviceKey);
 
   const lines: OrderLine[] = [{ id: "base", label: base.label, amount: base.amount }];
 
-  if (base.hasStateFee && params.stateName) {
-    const st = STATE_FEES.find((s) => s.name === params.stateName);
+  // For state-fee services, track whether the supplied state actually resolved.
+  // Services with no state fee are "applied" by definition.
+  let stateApplied = !base.hasStateFee;
+  if (base.hasStateFee) {
+    const st = params.stateName ? STATE_FEES.find((s) => s.name === params.stateName) : undefined;
     if (st) {
+      stateApplied = true;
       lines.push({
         id: `state:${st.name}`,
         label: `${st.name} state filing fee`,
@@ -74,8 +87,8 @@ export function computeOrder(params: {
     if (a) lines.push({ id: `addon:${a.id}`, label: a.name, amount: a.price });
   }
 
-  const total = lines.reduce((s, l) => s + l.amount, 0);
-  return { lines, total, serviceKey, hasStateFee: base.hasStateFee };
+  const total = roundMoney(lines.reduce((s, l) => s + l.amount, 0));
+  return { lines, total, serviceKey, hasStateFee: base.hasStateFee, serviceResolved, stateApplied };
 }
 
 // Curated country list for billing (ISO-3166 alpha-2) — covers the markets this

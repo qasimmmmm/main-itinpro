@@ -13,6 +13,8 @@ import {
 } from "@/lib/checkout";
 import { STATE_FEES } from "@/lib/states";
 import { company, googleAdsId } from "@/lib/content";
+import { RESTRICTED } from "@/lib/geo";
+import { formatUSD } from "@/lib/money";
 
 const TOKEN_KEY = process.env.NEXT_PUBLIC_NMI_TOKENIZATION_KEY || "";
 const GATEWAY = process.env.NEXT_PUBLIC_NMI_GATEWAY_URL || "https://secure.nmi.com";
@@ -73,6 +75,22 @@ function CheckoutInner() {
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState("");
   const chargeRef = useRef<((token: string) => void) | null>(null);
+  // Per-attempt idempotency key (stable across an ambiguous retry, rotated after a
+  // definitive decline), a guard so Collect.js is configured exactly once, and a
+  // flag tracking whether a payment request is mid-flight.
+  const idemRef = useRef("");
+  const configuredRef = useRef(false);
+  const inFlightRef = useRef(false);
+
+  // Country from the middleware-set cookie, used to block sanctioned geographies
+  // client-side (the server check is authoritative).
+  const [ipCountry, setIpCountry] = useState("");
+  useEffect(() => {
+    const m =
+      typeof document !== "undefined" && document.cookie.match(/(?:^|;\s*)user-country=([^;]+)/);
+    if (m) setIpCountry(decodeURIComponent(m[1]).toUpperCase());
+  }, []);
+  const restricted = RESTRICTED.has(ipCountry) || RESTRICTED.has((billing.country || "").toUpperCase());
 
   const order = useMemo(
     () =>
@@ -87,6 +105,10 @@ function CheckoutInner() {
   // Configure Collect.js once the script is ready.
   useEffect(() => {
     if (!scriptLoaded || !TOKEN_KEY || !window.CollectJS) return;
+    // Configure exactly once (React 18 StrictMode runs effects twice in dev, and
+    // re-configuring already-mounted iframes throws).
+    if (configuredRef.current) return;
+    configuredRef.current = true;
     try {
       window.CollectJS.configure({
         variant: "inline",
@@ -106,11 +128,24 @@ function CheckoutInner() {
         focusCss: { color: "#0B2238" },
         timeoutDuration: 10000,
         timeoutCallback: () => {
+          inFlightRef.current = false;
           setProcessing(false);
           setError("Please double-check your card number, expiry date and CVV.");
         },
+        // Fires when a hosted field's validity changes. Critically, when the user
+        // presses Pay with empty/invalid card fields, Collect.js validates and
+        // short-circuits WITHOUT firing callback or timeoutCallback — so without
+        // this, the button would be stuck on "Processing…" forever.
+        validationCallback: (_field: string, status: boolean, message: string) => {
+          if (inFlightRef.current && !status) {
+            inFlightRef.current = false;
+            setProcessing(false);
+            setError(message ? `Please check your card details: ${message}` : "Please check your card number, expiry date and CVV.");
+          }
+        },
         fieldsAvailableCallback: () => setCollectReady(true),
         callback: (response: any) => {
+          inFlightRef.current = false;
           if (response?.token && chargeRef.current) {
             chargeRef.current(response.token);
           } else {
@@ -119,8 +154,10 @@ function CheckoutInner() {
           }
         },
       });
-    } catch {
-      // configure can throw if called twice during fast refresh — safe to ignore.
+    } catch (err) {
+      // A real configure failure leaves the card fields stuck on "Loading…" — make
+      // it observable instead of swallowing it silently.
+      console.error("[checkout] Collect.js configure failed", err);
     }
   }, [scriptLoaded]);
 
@@ -146,6 +183,10 @@ function CheckoutInner() {
       setError("The payment gateway isn't configured yet.");
       return;
     }
+    if (restricted) {
+      setError("We're unable to process payments for your country due to US sanctions. Please contact us first.");
+      return;
+    }
     if (!detailsValid) {
       setError("Please complete your contact, billing and cardholder details.");
       return;
@@ -155,6 +196,15 @@ function CheckoutInner() {
       return;
     }
 
+    // One idempotency key per attempt; (re)generate only when starting a fresh one.
+    if (!idemRef.current) {
+      idemRef.current =
+        typeof crypto !== "undefined" && crypto.randomUUID
+          ? crypto.randomUUID()
+          : `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    }
+
+    inFlightRef.current = true;
     setProcessing(true);
     chargeRef.current = async (token: string) => {
       try {
@@ -163,6 +213,7 @@ function CheckoutInner() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             payment_token: token,
+            idempotencyKey: idemRef.current,
             serviceSlug,
             stateName: base.hasStateFee ? stateName : undefined,
             addOnIds,
@@ -172,27 +223,35 @@ function CheckoutInner() {
         });
         const data = await res.json();
         if (data.success) {
-          if (typeof window !== "undefined" && window.gtag) {
+          // Only fire the conversion with a real transaction id so Google can
+          // de-duplicate it.
+          if (typeof window !== "undefined" && window.gtag && data.transactionId) {
             window.gtag("event", "conversion", {
               send_to: googleAdsId,
               value: data.amount,
               currency: "USD",
-              transaction_id: data.transactionId || "",
+              transaction_id: data.transactionId,
             });
             window.gtag("event", "purchase", {
               value: data.amount,
               currency: "USD",
-              transaction_id: data.transactionId || "",
+              transaction_id: data.transactionId,
             });
           }
           router.push(
             `/checkout/success?tx=${encodeURIComponent(data.transactionId || "")}&amt=${data.amount}`
           );
         } else {
+          // Definitive decline — rotate the key so the next attempt is a new charge.
+          idemRef.current = "";
+          inFlightRef.current = false;
           setProcessing(false);
           setError(data.message || "Your payment was declined. Please try a different card.");
         }
       } catch {
+        // Ambiguous failure — KEEP the key so a retry de-duplicates instead of
+        // risking a double charge.
+        inFlightRef.current = false;
         setProcessing(false);
         setError("We couldn't complete the payment. Please try again.");
       }
@@ -201,6 +260,7 @@ function CheckoutInner() {
     try {
       window.CollectJS.startPaymentRequest();
     } catch {
+      inFlightRef.current = false;
       setProcessing(false);
       setError("Something went wrong starting the payment. Please refresh and try again.");
     }
@@ -222,8 +282,10 @@ function CheckoutInner() {
       )}
 
       <div className="grid items-start gap-8 lg:grid-cols-[1.6fr_1fr]">
-        {/* LEFT: configurator + payment */}
-        <div className="space-y-6">
+        {/* LEFT: configurator + payment. The fieldset disables every input while a
+            charge is in flight, so the on-screen total can never diverge from the
+            amount actually being charged. */}
+        <fieldset disabled={processing} className="m-0 min-w-0 space-y-6 border-0 p-0 disabled:opacity-100">
           {!configured && (
             <div className="rounded-xl2 border border-gold/40 bg-gold-soft/40 p-5 text-[14px] leading-relaxed text-ink">
               <strong className="font-semibold">Setup needed:</strong> add your NMI keys
@@ -231,6 +293,17 @@ function CheckoutInner() {
               <code className="font-mono text-[13px]">NMI_SECURITY_KEY</code>) to enable live card
               payments. See <span className="font-semibold">CHECKOUT-SETUP.md</span>. Everything else
               on this page already works.
+            </div>
+          )}
+
+          {restricted && (
+            <div className="rounded-xl2 border border-gold/40 bg-gold-soft/40 p-5 text-[14px] leading-relaxed text-ink">
+              <strong className="font-semibold">We may be unable to serve your country.</strong> Due
+              to US sanctions we can&apos;t process this payment automatically. Please{" "}
+              <a href={wa} target="_blank" rel="noopener noreferrer" className="font-semibold text-emerald-deep underline">
+                message us on WhatsApp
+              </a>{" "}
+              and we&apos;ll confirm your eligibility before any payment.
             </div>
           )}
 
@@ -248,7 +321,7 @@ function CheckoutInner() {
                     : "Company, EIN, ITIN and address — the complete setup."}
                 </p>
               </div>
-              <span className="font-mono text-[15px] font-semibold text-ink">${base.amount}</span>
+              <span className="font-mono text-[15px] font-semibold text-ink">{formatUSD(base.amount)}</span>
             </div>
 
             {base.hasStateFee && (
@@ -297,6 +370,9 @@ function CheckoutInner() {
                     <button
                       key={a.id}
                       type="button"
+                      role="checkbox"
+                      aria-checked={checked}
+                      aria-label={`${a.name} — adds ${formatUSD(a.price)}`}
                       onClick={() => toggleAddOn(a.id)}
                       className={`flex w-full items-start gap-3.5 rounded-xl border p-4 text-left transition-all ${
                         checked
@@ -438,10 +514,10 @@ function CheckoutInner() {
 
             <button
               onClick={handlePay}
-              disabled={processing || !configured}
+              disabled={processing || !configured || restricted}
               className="btn-primary mt-5 w-full justify-center text-[15px] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {processing ? "Processing…" : `Pay $${order.total} securely`}
+              {processing ? "Processing…" : `Pay ${formatUSD(order.total)} securely`}
             </button>
 
             <p className="mt-3 flex items-center justify-center gap-1.5 text-center text-[12px] text-slate">
@@ -452,7 +528,7 @@ function CheckoutInner() {
               Card details are encrypted and processed securely. We never see or store your full card number.
             </p>
           </div>
-        </div>
+        </fieldset>
 
         {/* RIGHT: order summary */}
         <div className="lg:sticky lg:top-24">
@@ -466,14 +542,14 @@ function CheckoutInner() {
                   <li key={l.id} className="flex items-start justify-between gap-3 text-[14px]">
                     <span className="text-ink/80">{l.label}</span>
                     <span className="shrink-0 font-mono font-medium text-ink">
-                      {l.amount === 0 ? "$0" : `$${l.amount}`}
+                      {formatUSD(l.amount)}
                     </span>
                   </li>
                 ))}
               </ul>
               <div className="mt-5 flex items-center justify-between border-t border-mist pt-4">
                 <span className="text-[15px] font-bold text-ink">Total due today</span>
-                <span className="font-display text-2xl font-extrabold text-ink">${order.total}</span>
+                <span className="font-display text-2xl font-extrabold text-ink">{formatUSD(order.total)}</span>
               </div>
             </div>
 

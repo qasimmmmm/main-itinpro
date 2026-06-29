@@ -3,7 +3,7 @@ import ServiceDetail from "@/components/ServiceDetail";
 import { pricing } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "LLC + EIN + ITIN Complete Package — $646",
+  title: `LLC + EIN + ITIN Complete Package — $${pricing.bundle.price}`,
   description:
     "The complete US setup for non-residents: a US LLC, your EIN and ITIN, and a US business address — handled end to end by Certifying Acceptance Agents so you can bank and accept payments worldwide.",
   alternates: { canonical: "/services/llc-ein-itin" },

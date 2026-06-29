@@ -1,9 +1,14 @@
 import type { MetadataRoute } from "next";
 import { company } from "@/lib/content";
 
+// Stable content date. Bump this when site content meaningfully changes — using
+// a fixed date (instead of `new Date()`) keeps every page's <lastmod> from
+// churning on every deploy, which would otherwise train crawlers to ignore it.
+const LAST_CONTENT_UPDATE = new Date("2026-06-29");
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = company.url;
-  const now = new Date();
+  const now = LAST_CONTENT_UPDATE;
 
   const routes = [
     { path: "/", priority: 1.0, changeFrequency: "weekly" as const },

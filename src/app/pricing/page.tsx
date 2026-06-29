@@ -10,8 +10,7 @@ import { pricing } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Pricing — ITIN, LLC & EIN, all-in state costs",
-  description:
-    "Transparent pricing for ITIN ($348), LLC + EIN + Business Address ($298 + state fee), and the complete LLC + EIN + ITIN bundle ($646). See the all-in cost for all 50 states.",
+  description: `Transparent pricing for ITIN ($${pricing.itin.price}), LLC + EIN + Business Address ($${pricing.llc.price} + state fee), and the complete LLC + EIN + ITIN bundle ($${pricing.bundle.price}). See the all-in cost for all 50 states.`,
   alternates: { canonical: "/pricing" },
 };
 
@@ -21,7 +20,7 @@ export default function PricingPage() {
       <PageHeader
         eyebrow="Pricing"
         title="Honest pricing, with every state fee shown upfront"
-        intro="No surprises at checkout. Choose a service, see exactly what it costs in your state, and know that the registered agent renews at a flat $298/year."
+        intro={`No surprises at checkout. Choose a service, see exactly what it costs in your state, and know that the registered agent renews at a flat $${pricing.registeredAgentRenewal}/year.`}
         cta={false}
       />
 
