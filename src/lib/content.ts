@@ -5,6 +5,8 @@
 
 export const company = {
   brand: "ITIN-Pro",
+  // Shows on customers' card statements (NMI dynamic descriptor). Keep <= 25 chars.
+  statementDescriptor: "ITIN Pro",
   legalEntity: "Tax Filing Corp",
   addressLine1: "97 Newkirk St, Suite 308",
   addressLine2: "Jersey City, NJ 07306",

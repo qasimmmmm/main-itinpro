@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { computeOrder } from "@/lib/checkout";
+import { company } from "@/lib/content";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -88,6 +89,8 @@ export async function POST(req: Request) {
   params.set("currency", "USD");
   params.set("orderid", `ITINPRO-${Date.now()}`);
   params.set("order_description", order.lines.map((l) => l.label).join(" + ").slice(0, 250));
+  // Dynamic statement descriptor — what appears on the customer's card statement.
+  params.set("descriptor", company.statementDescriptor);
 
   if (customer?.firstName) params.set("first_name", customer.firstName);
   if (customer?.lastName) params.set("last_name", customer.lastName);
